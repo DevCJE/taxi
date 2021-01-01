@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.mapperUser">
+    
+	<insert id="insertUser" parameterType="ModelUser">
+        <![CDATA[
+            INSERT INTO user2 (user_id,      user_pw,    user_email,    user_phone,    user_gender,     user_carnum, user_check_kakao, user_refresh_token,   user_lv)
+            VALUES          (#{user_id}, #{user_pw}, #{user_email}, #{user_phone}, #{user_gender} , #{user_carnum}, #{user_check_kakao}, #{user_refresh_token}, #{user_lv})
+        ]]>
+    </insert>
+
+    <select id="login" parameterType="ModelUser" resultType="ModelUser">
+        <![CDATA[
+            select *
+              from user2
+             WHERE  user_id = #{user_id}
+              AND user_pw = #{user_pw}
+        ]]>
+    </select>
+    
+    <select id="checkuserid" parameterType="string" resultType="int">
+        <![CDATA[
+            SELECT count(user_id)
+            FROM user2
+            where user_id = #{user_id}
+        ]]>
+    </select>
+
+    <update id="refreshToken" parameterType="ModelUser">
+        <![CDATA[
+            update user2
+            set user_refresh_token = #{user_refresh_token}
+            where user_id = #{user_id}
+        ]]>
+    </update>
+
+    <update id="userUpdate" parameterType="Map">
+        <![CDATA[
+          update user2
+          set user_pw = #{user_pw} , user_email = #{user_email} , user_phone = #{user_phone} , user_carnum = #{user_carnum} , user_check_kakao = #{user_check_kakao}, user_refresh_token = #{user_refresh_token}
+          where user_id = #{user_id} and user_pw = #{user_password}
+        ]]>
+    </update>
+
+    <delete id="deleteUser" parameterType="ModelUser">
+        <![CDATA[
+          delete from user2
+            where user_id = #{user_id} and user_pw = #{user_pw}
+        ]]>
+    </delete>
+    
+
+</mapper>
